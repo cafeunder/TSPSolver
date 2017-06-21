@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -7,7 +8,7 @@ namespace TSPSolver {
 		// 次元数
 		public int Dimension { get; private set; }
 		// 各都市の座標
-		public double[][] Coordinate { get; private set; }
+		private double[][] Coordinate { get; set; }
 
 		public TSPInstance(string filepath) {
 			using (StreamReader sr = new StreamReader(File.OpenRead(filepath))) {
@@ -45,6 +46,13 @@ namespace TSPSolver {
 					this.Coordinate[i][1] = double.Parse(record[2]);
 				}
 			}
+		}
+
+		public int CalcDistance(int v0, int v1) {
+			double dx = this.Coordinate[v0][0] - this.Coordinate[v1][0];
+			double dy = this.Coordinate[v0][1] - this.Coordinate[v1][1];
+
+			return (int)(Math.Sqrt(dx * dx + dy * dy) + 0.5);
 		}
 	}
 }
