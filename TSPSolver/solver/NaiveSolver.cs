@@ -20,6 +20,7 @@ namespace TSPSolver.solver {
 				}
 			}
 
+			// 間違えてる！！！スタックだと重複でプッシュされる恐れあり
 			// 検索順スタックを生成
 			Stack<int> nodeStack = new Stack<int>(instance.Dimension);
 			foreach (int node in tour.NodeArray) {
@@ -29,19 +30,22 @@ namespace TSPSolver.solver {
 			// 全てのエッジが改善不可能になるまで続ける
 			while (nodeStack.Count != 0) {
 				int v = nodeStack.Pop();
+				int vn = tour.nextID(v);
 
 				// ランダムなノードsから始めて全てのノードに接続しているエッジを検索する
 				int s = SRandom.Instance.NextInt(instance.Dimension);
 				for (int i = 0; i < instance.Dimension; i++) {
 					int w = (s + i) % instance.Dimension;
+					if (w == v) { continue; }
 
-					// (v, v+1)と(w, w+1)を削除する
-					int remove_gain = this.distTable[v][tour.nextID(v)] + this.distTable[w][tour.nextID(w)];
-					// (v, w)と(v+1, w+1)を追加する
-					int add_gain = this.distTable[v+1][tour.nextID(v+1)] + this.distTable[w+1][tour.nextID(w+1)];
+					int wn = tour.nextID(w);
+					// (v, vn)と(w, wn)を削除する
+					int remove_gain = this.distTable[v][vn] + this.distTable[w][wn];
+					// (v, w)と(vn, wn)を追加する
+					int add_gain = this.distTable[v][w] + this.distTable[vn][wn];
 
 					if (add_gain < remove_gain) {
-
+						tour.flip(v, w, true);
 					}
 				}
 			}
