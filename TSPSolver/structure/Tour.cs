@@ -1,5 +1,4 @@
 
-
 using System;
 
 namespace TSPSolver.structure {
@@ -57,14 +56,14 @@ namespace TSPSolver.structure {
 			int ia, ib, ic, id;
 			if (forward) {
 				ia = this.indexArray[v1];
-				ib = this.indexArray[this.nextID(v1)];
+				ib = (ia + 1) % this.NodeArray.Length;
 				ic = this.indexArray[v2];
-				id = this.indexArray[this.nextID(v2)];
+				id = (ic + 1) % this.NodeArray.Length;
 			} else {
-				ia = this.indexArray[this.prevID(v1)];
 				ib = this.indexArray[v1];
-				ic = this.indexArray[this.prevID(v2)];
+				ia = (ib + this.NodeArray.Length - 1) % this.NodeArray.Length;
 				id = this.indexArray[v2];
+				ic = (id + this.NodeArray.Length - 1) % this.NodeArray.Length;
 			}
 
 			// va,vd間と、vb,vc間のインデックスの距離を計算
@@ -94,7 +93,7 @@ namespace TSPSolver.structure {
 				this.indexArray[this.NodeArray[tail]] = tail;
 
 				head = (head + 1) % this.NodeArray.Length;
-				tail = (tail  + this.NodeArray.Length - 1) % this.NodeArray.Length;
+				tail = (tail + this.NodeArray.Length - 1) % this.NodeArray.Length;
 			}
 		}
 

@@ -1,35 +1,30 @@
-using System.Collections.Generic;
+using System;
 using TSPSolver.structure;
 
 namespace TSPSolver.solver {
 	public class NaiveSolver {
-		/// <summary>
-		/// ノード間の距離テーブル
-		/// </summary>
-		private int[][] distTable;
-
-		public void Solve(TSPInstance instance) {
+		public static int[] Solve(TSPInstance instance) {
+			// ツアーを生成
 			Tour tour = new Tour(instance.Dimension);
+#if DEBUG
+			int length = instance.CalcTourLength(tour.NodeArray);
+#endif
 
-			// 距離をあらかじめ計算しテーブルとして保持
-			this.distTable = new int[instance.Dimension][];
+			// ノード間の距離テーブル
+			int[][] distTable = new int[instance.Dimension][];
 			for (int i = 0; i < instance.Dimension; i++) {
-				this.distTable[i] = new int[instance.Dimension];
+				distTable[i] = new int[instance.Dimension];
 				for (int j = 0; j < instance.Dimension; j++) {
-					this.distTable[i][j] = instance.CalcDistance(i, j);
+					distTable[i][j] = instance.CalcDistance(i, j);
 				}
 			}
 
-			// 間違えてる！！！スタックだと重複でプッシュされる恐れあり
-			// 検索順スタックを生成
-			Stack<int> nodeStack = new Stack<int>(instance.Dimension);
-			foreach (int node in tour.NodeArray) {
-				nodeStack.Push(node);
-			}
+			// 選択候補リストを生成
+			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
 
 			// 全てのエッジが改善不可能になるまで続ける
-			while (nodeStack.Count != 0) {
-				int v = nodeStack.Pop();
+			while (selectNodeList.Size != 0) {
+				int v = selectNodeList.GetRand();
 				int vn = tour.nextID(v);
 
 				// ランダムなノードsから始めて全てのノードに接続しているエッジを検索する
@@ -40,15 +35,26 @@ namespace TSPSolver.solver {
 
 					int wn = tour.nextID(w);
 					// (v, vn)と(w, wn)を削除する
-					int remove_gain = this.distTable[v][vn] + this.distTable[w][wn];
+					int remove_gain = distTable[v][vn] + distTable[w][wn];
 					// (v, w)と(vn, wn)を追加する
-					int add_gain = this.distTable[v][w] + this.distTable[vn][wn];
+					int add_gain = distTable[v][w] + distTable[vn][wn];
 
 					if (add_gain < remove_gain) {
 						tour.flip(v, w, true);
+						selectNodeList.Add(w);
+#if DEBUG
+						length += add_gain - remove_gain;
+						Console.WriteLine(length);
+#endif
+						goto SUCCESS;
 					}
 				}
+				// 改善失敗
+				selectNodeList.Remove(v);
+			SUCCESS:;
 			}
+
+			return tour.NodeArray;
 		}
 	}
 }

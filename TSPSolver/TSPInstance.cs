@@ -54,5 +54,18 @@ namespace TSPSolver {
 
 			return (int)(Math.Sqrt(dx * dx + dy * dy) + 0.5);
 		}
+
+		public int CalcTourLength(int[] tour) {
+			int result = 0;
+
+			// d(0,1) + d(1,2) + d(2,3) + ... + d(n-2, n-1)
+			for (int i = 0; i < tour.Length - 1; i++) {
+				result += this.CalcDistance(tour[i], tour[i + 1]);
+			}
+
+			// + d(n-1, 0)
+			result += this.CalcDistance(tour[tour.Length - 1], tour[0]);
+			return result;
+		}
 	}
 }
