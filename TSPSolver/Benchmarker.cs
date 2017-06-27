@@ -28,7 +28,7 @@ namespace TSPSolver {
 			for (int i = 0; i < trial_num; i++) {
 				sw.Start();
 				// ŒvŽZ‚·‚é
-				int[] tour = NaiveSolver.Solve(instance);
+				int[] tour = Naive2opt.Solve(instance);
 				sw.Stop();
 
 				// Œo˜H’·‚ÌŒvã

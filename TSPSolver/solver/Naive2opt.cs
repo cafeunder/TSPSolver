@@ -2,7 +2,7 @@ using System;
 using TSPSolver.structure;
 
 namespace TSPSolver.solver {
-	public class NaiveSolver {
+	public class Naive2opt {
 		public static int[] Solve(TSPInstance instance) {
 			// ƒcƒA[‚ğ¶¬
 			Tour tour = new Tour(instance.Dimension);
