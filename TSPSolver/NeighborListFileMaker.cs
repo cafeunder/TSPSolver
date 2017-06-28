@@ -4,6 +4,9 @@ using System.Text;
 using TSPSolver.neighborList;
 
 namespace TSPSolver {
+	/// <summary>
+	/// Bechmarkerで使う近傍ファイルを作成するクラス
+	/// </summary>
 	public class NeighborListFileMaker {
 		public static void Main(string[] args) {
 			foreach (string instanceName in Benchmarker.INSTANCES) {

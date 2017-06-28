@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using TSPSolver.neighborList;
 using TSPSolver.solver;
 
 namespace TSPSolver {
@@ -12,9 +13,10 @@ namespace TSPSolver {
 			"mona-lisa100K"
 		};
 
-		public static void Run(string instanceName) {
-			// 使うインスタンス
-			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
+		/// <summary>
+		/// ソルバを起動する
+		/// </summary>
+		public static void Run(TSPInstance instance, Solver solver) {
 			// 試行回数
 			int trial_num = 10;
 			// 経路長の合計、経路長の2乗の合計
@@ -28,7 +30,7 @@ namespace TSPSolver {
 			for (int i = 0; i < trial_num; i++) {
 				sw.Start();
 				// 計算する
-				int[] tour = Naive2opt.Solve(instance);
+				int[] tour = solver.Run(instance);
 				sw.Stop();
 
 				// 経路長の計上
@@ -42,11 +44,9 @@ namespace TSPSolver {
 				sw.Reset();
 			}
 
-			double length_ave = (length_sum / (double)trial_num);
+			double length_ave = (length_sum / trial_num);
 			double length_sd = Math.Sqrt(length_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * length_ave * length_ave);
-			Console.WriteLine(length_sum2 / (trial_num - 1.0));
-			Console.WriteLine((trial_num) / (trial_num - 1.0) * length_ave * length_ave);
-			double time_ave = (time_sum / (double)trial_num);
+			double time_ave = (time_sum / trial_num);
 			double time_sd = Math.Sqrt(time_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * time_ave * time_ave);
 
 			Console.WriteLine("result : ave[sd]");
@@ -54,9 +54,45 @@ namespace TSPSolver {
 			Console.WriteLine("time   : " + time_ave + "[" + time_sd + "]");
 		}
 
+		/// <summary>
+		/// 近傍リストを作成する
+		/// </summary>
+		public static void RunNeighbor(string instanceName) {
+			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".neighbor");
+
+			// 試行回数
+			int trial_num = 10;
+			// 計算時間の2乗の合計
+			double time_sum = 0;
+			double time_sum2 = 0;
+
+			Stopwatch sw = new Stopwatch();
+			for (int i = 0; i < trial_num; i++) {
+				sw.Start();
+				// 近傍リストを作る
+				NeighborList neighborList = new NeighborList(instance, 50);
+				sw.Stop();
+
+				// 計算時間の計上
+				time_sum += sw.ElapsedMilliseconds;
+				time_sum2 += (double)sw.ElapsedMilliseconds * sw.ElapsedMilliseconds;
+				sw.Reset();
+			}
+
+			double time_ave = (time_sum / trial_num);
+			double time_sd = Math.Sqrt(time_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * time_ave * time_ave);
+			Console.WriteLine("result : ave[sd]");
+			Console.WriteLine("time   : " + time_ave + "[" + time_sd + "]");
+		}
+
 		public static void Main(string[] args) {
 			foreach (string instanceName in INSTANCES) {
-				Benchmarker.Run(instanceName);
+				TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
+				NeighborList neighborList = new NeighborList();
+				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
+
+				Benchmarker.Run(instance, new Naive2opt());
+				// Benchmarker.RunNeighbor(instanceName);
 			}
 		}
 	}

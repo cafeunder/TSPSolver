@@ -8,9 +8,9 @@ namespace TSPSolver {
 		public static void Main(string[] args) {
 			SRandom.Intialize(0);
 			TSPInstance instance = new TSPInstance(@"data/ca4663.tsp");
-			NeighborList neighborList = new NeighborList(instance, 50);
+			Solver solver = new Neighbor2opt(new NeighborList(instance, 50));
 
-			int[] tour = Naive2opt.Solve(instance);
+			int[] tour = solver.Run(instance);
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));
 		}
 	}

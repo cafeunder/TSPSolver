@@ -5,22 +5,13 @@ namespace TSPSolver.solver {
 	/*
 	 * 近傍リストなし、DontLookBitなし
 	 */
-	public class Naive2opt {
-		public static int[] Solve(TSPInstance instance) {
+	public class Naive2opt : Solver {
+		override public int[] Run(TSPInstance instance) {
 			// ツアーを生成
 			Tour tour = new Tour(instance.Dimension);
 #if DEBUG
 			int length = instance.CalcTourLength(tour.NodeArray);
 #endif
-
-			// ノード間の距離テーブル
-			int[][] distTable = new int[instance.Dimension][];
-			for (int i = 0; i < instance.Dimension; i++) {
-				distTable[i] = new int[instance.Dimension];
-				for (int j = 0; j < instance.Dimension; j++) {
-					distTable[i][j] = instance.CalcDistance(i, j);
-				}
-			}
 
 			// 選択候補リストを生成
 			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
@@ -38,9 +29,9 @@ namespace TSPSolver.solver {
 
 					int wn = tour.nextID(w);
 					// (v, vn)と(w, wn)を削除する
-					int remove_gain = distTable[v][vn] + distTable[w][wn];
+					int remove_gain = instance.CalcDistance(v, vn) + instance.CalcDistance(w, wn);
 					// (v, w)と(vn, wn)を追加する
-					int add_gain = distTable[v][w] + distTable[vn][wn];
+					int add_gain = instance.CalcDistance(v, w) + instance.CalcDistance(vn, wn);
 
 					if (add_gain < remove_gain) {
 						tour.flip(v, w, true);

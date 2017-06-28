@@ -4,13 +4,37 @@ using System.IO;
 using System.Text;
 
 namespace TSPSolver.neighborList {
+	/// <summary>
+	/// 近傍リストを表すクラス
+	/// </summary>
 	public class NeighborList {
+		// インスタンスの次元数
 		private int dimension;
+		// 近傍数
 		public int NeighborNum { get; private set; }
+		/// <summary>
+		/// インデックスに対応する都市の近傍都市を格納する配列
+		/// </summary>
 		public int[][] NeighborNodes { get; private set; }
+		/// <summary>
+		/// 近傍都市との距離を格納する配列
+		/// </summary>
 		public int[][] DistanceTable { get; private set; }
 
+		// デフォルトコンストラクタ
+		public NeighborList() { }
+		
+		/// <summary>
+		/// Initializeを呼び出すコンストラクタ
+		/// </summary>
 		public NeighborList(TSPInstance instance, int neighborNum) {
+			this.Initialize(instance, neighborNum);
+		}
+
+		/// <summary>
+		/// 近傍リストを作る
+		/// </summary>
+		public void Initialize(TSPInstance instance, int neighborNum) {
 			this.dimension = instance.Dimension;
 			this.NeighborNodes = new int[instance.Dimension][];
 			this.DistanceTable = new int[instance.Dimension][];
