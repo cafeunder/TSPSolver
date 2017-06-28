@@ -4,7 +4,7 @@ using TSPSolver.solver;
 
 namespace TSPSolver {
 	public class Benchmarker {
-		private static string[] INSTANCES = {
+		public static string[] INSTANCES = {
 			"ca4663",
 			"fi10639",
 			"bm33708",

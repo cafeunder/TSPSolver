@@ -3,9 +3,9 @@ using TSPSolver.structure;
 
 namespace TSPSolver.solver {
 	/*
-	 * 近傍リストなし、DontLookBitなし
+	 * 近傍リストあり、DontLookBitなし
 	 */
-	public class Naive2opt {
+	public class Neighbor2opt {
 		public static int[] Solve(TSPInstance instance) {
 			// ツアーを生成
 			Tour tour = new Tour(instance.Dimension);
