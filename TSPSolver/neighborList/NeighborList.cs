@@ -38,11 +38,12 @@ namespace TSPSolver.neighborList {
 			this.dimension = instance.Dimension;
 			this.NeighborNodes = new int[instance.Dimension][];
 			this.DistanceTable = new int[instance.Dimension][];
-			this.NeighborNum = (instance.Dimension < neighborNum) ? instance.Dimension : neighborNum;
+			this.NeighborNum = (instance.Dimension - 1 < neighborNum) ? instance.Dimension - 1 : neighborNum;
 
 			for (int i = 0; i < instance.Dimension; i++) {
 				this.NeighborNodes[i] = new int[this.NeighborNum];
 				this.DistanceTable[i] = new int[this.NeighborNum];
+				this.NeighborNodes[i][0] = -1;
 				this.DistanceTable[i][0] = int.MaxValue;
 				int count = 0;
 			
@@ -60,7 +61,7 @@ namespace TSPSolver.neighborList {
 						// 所定の位置までずらす
 						for (int k = insert; k > 0; k--) {
 							// いっこ前の要素が自分よりも小さければ そこが所定の位置
-							if (this.DistanceTable[i][k - 1] < this.DistanceTable[i][k]) {
+							if (this.DistanceTable[i][k - 1] <= this.DistanceTable[i][k]) {
 								break;
 							}
 

@@ -30,7 +30,7 @@ namespace TSPSolver.solver {
 				int vn = tour.nextID(v);
 				int dist = instance.CalcDistance(v, vn);
 
-				// ランダムなノードsから始めて全てのノードに接続しているエッジを検索する
+				// 最近傍のノードから見ていく
 				for (int i = 0; i < this.neighborList.NeighborNum; i++) {
 					int w = this.neighborList.NeighborNodes[v][i];
 					// v - vnよりも v - wの方が長いなら終了
