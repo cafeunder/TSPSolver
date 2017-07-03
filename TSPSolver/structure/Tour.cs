@@ -2,8 +2,15 @@
 using System;
 
 namespace TSPSolver.structure {
+	/// <summary>
+	/// TSPのツアーを表すクラス
+	/// </summary>
 	public class Tour {
+		/// <summary>
+		/// ノード配列
+		/// </summary>
 		public int[] NodeArray{ get; private set; }
+		// あるノードiがNodeArray上のどの位置にあるかを表す配列
 		private int[] indexArray;
 
 		public Tour(int nodeNum) {
@@ -28,7 +35,7 @@ namespace TSPSolver.structure {
 		/// <summary>
 		/// あるノードの次に来るノードを返す
 		/// </summary>
-		public int nextID(int node) {
+		public int NextID(int node) {
 			// nodeの次のインデックスのノードを返す
 			// ただし、インデックスが配列の長さを超えた場合は0に戻す
 			return this.NodeArray[(this.indexArray[node] + 1) % this.NodeArray.Length];
@@ -37,7 +44,7 @@ namespace TSPSolver.structure {
 		/// <summary>
 		/// あるノードの前にあるノードを返す
 		/// </summary>
-		public int prevID(int node) {
+		public int PrevID(int node) {
 			// nodeの前のインデックスのノードを返す
 			// だだし、インデックスが0を割った場合は配列の長さ-1とする
 			return this.NodeArray[(this.indexArray[node] + this.NodeArray.Length - 1) % this.NodeArray.Length];
@@ -49,7 +56,7 @@ namespace TSPSolver.structure {
 		/// <param name="v1">ノード1</param>
 		/// <param name="v2">ノード2</param>
 		/// <param name="forward">順方向か？</param>
-		public void flip(int v1, int v2, bool forward) {
+		public void Flip(int v1, int v2, bool forward) {
 			// va - vb      va   vb
 			//          ->     X     と考える
 			// vc - vd      vc   vd

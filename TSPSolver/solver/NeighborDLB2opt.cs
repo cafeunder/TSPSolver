@@ -6,12 +6,15 @@ namespace TSPSolver.solver {
 	/*
 	 * 近傍リストあり、DontLookBitなし
 	 */
-	public class Neighbor2opt : Solver {
+	public class NeighborDLB2opt : Solver {
 		// 近傍リスト
 		NeighborList neighborList;
+		// 逆近傍リスト
+		InverseNeighborList invNeighborList;
 
-		public Neighbor2opt(NeighborList neighborList) {
+		public NeighborDLB2opt(NeighborList neighborList, InverseNeighborList invNeighborList) {
 			this.neighborList = neighborList;
+			this.invNeighborList = invNeighborList;
 		}
 
 		override public int[] Run(TSPInstance instance) {
@@ -20,11 +23,12 @@ namespace TSPSolver.solver {
 #if DEBUG
 			int length = instance.CalcTourLength(tour.NodeArray);
 #endif
+			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
 			
 			// 全てのエッジが改善不可能になるまで続ける
 			int si = SRandom.Instance.NextInt(instance.Dimension);
-			for (int i = 0; i < instance.Dimension; i++) {
-				int v = (si + i) % instance.Dimension;
+			while (selectNodeList.Size != 0) {
+				int v = selectNodeList.GetRand();
 
 				// 正順と逆順のエッジを確かめる
 				for (int d = 0; d < 2; d++) {
@@ -48,17 +52,23 @@ namespace TSPSolver.solver {
 
 						if (add_gain < remove_gain) {
 							tour.Flip(v, w, forward);
+							// DLB追加
+							selectNodeList.Add(w);
+							selectNodeList.Add(vn);
+							selectNodeList.Add(wn);
+							this.invNeighborList.AddNearestNodes(selectNodeList, v);
+							this.invNeighborList.AddNearestNodes(selectNodeList, w);
+							this.invNeighborList.AddNearestNodes(selectNodeList, vn);
+							this.invNeighborList.AddNearestNodes(selectNodeList, wn);
 #if DEBUG
 							length += add_gain - remove_gain;
 							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));
 #endif
-							// 最初からやりなおす
-							i = 0;
-							si = SRandom.Instance.NextInt(instance.Dimension);
 							goto FINISH;
 						}
 					}
 				}
+				selectNodeList.Remove(v);
 			FINISH:;
 			}
 

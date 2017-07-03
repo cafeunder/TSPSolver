@@ -11,8 +11,10 @@ namespace TSPSolver {
 		public static void Main(string[] args) {
 			foreach (string instanceName in Benchmarker.INSTANCES) {
 				TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
-				NeighborList neighborList = new NeighborList(instance, 50);
-				neighborList.WriteTo(@"data/" + instanceName + ".neighbor");
+				NeighborList neighbor_list = new NeighborList(instance, 50);
+				InverseNeighborList inv_neighbor_list = new InverseNeighborList(neighbor_list);
+				neighbor_list.WriteTo(@"data/" + instanceName + ".neighbor");
+				inv_neighbor_list.WriteTo(@"data/" + instanceName + ".inv.neighbor");
 			}
 		}
 	}

@@ -46,7 +46,7 @@ namespace TSPSolver.neighborList {
 				this.NeighborNodes[i][0] = -1;
 				this.DistanceTable[i][0] = int.MaxValue;
 				int count = 0;
-			
+
 				for (int j = 0; j < instance.Dimension; j++) {
 					if (i == j) { continue; }
 					int distance = instance.CalcDistance(i, j);

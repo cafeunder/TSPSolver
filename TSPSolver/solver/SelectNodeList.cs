@@ -55,7 +55,7 @@ namespace TSPSolver.solver {
 		/// ”z—ñ’†‚Ì—v‘f‚ðƒ‰ƒ“ƒ_ƒ€‚ÉŽæ“¾‚·‚é
 		/// </summary>
 		public int GetRand() {
-			return this.elmArray[SRandom.Instance.NextInt(this.Size - 1)];
+			return this.elmArray[SRandom.Instance.NextInt(this.Size)];
 		}
 	}
 }

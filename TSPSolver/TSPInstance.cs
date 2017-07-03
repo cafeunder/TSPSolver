@@ -4,6 +4,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 namespace TSPSolver {
+	/// <summary>
+	/// TSPのインスタンスを表すクラス
+	/// </summary>
 	public class TSPInstance {
 		// 次元数
 		public int Dimension { get; private set; }

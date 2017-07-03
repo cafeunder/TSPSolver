@@ -58,7 +58,7 @@ namespace TSPSolver {
 		/// 近傍リストを作成する
 		/// </summary>
 		public static void RunNeighbor(string instanceName) {
-			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".neighbor");
+			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
 
 			// 試行回数
 			int trial_num = 10;
@@ -87,11 +87,21 @@ namespace TSPSolver {
 
 		public static void Main(string[] args) {
 			foreach (string instanceName in INSTANCES) {
+				Console.WriteLine(instanceName);
 				TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
+
+				// Benchmarker.Run(instance, new Naive2opt());
+				/*
 				NeighborList neighborList = new NeighborList();
 				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
+				Benchmarker.Run(instance, new Neighbor2opt(neighborList));
+				*/
+				NeighborList neighborList = new NeighborList();
+				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
+				InverseNeighborList invNeighborList = new InverseNeighborList();
+				invNeighborList.ReadFrom(@"data/" + instanceName + ".inv.neighbor");
+				Benchmarker.Run(instance, new NeighborDLB2opt(neighborList, invNeighborList));
 
-				Benchmarker.Run(instance, new Naive2opt());
 				// Benchmarker.RunNeighbor(instanceName);
 			}
 		}
