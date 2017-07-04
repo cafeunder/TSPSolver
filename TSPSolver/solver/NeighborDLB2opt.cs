@@ -9,12 +9,9 @@ namespace TSPSolver.solver {
 	public class NeighborDLB2opt : Solver {
 		// 近傍リスト
 		NeighborList neighborList;
-		// 逆近傍リスト
-		InverseNeighborList invNeighborList;
 
-		public NeighborDLB2opt(NeighborList neighborList, InverseNeighborList invNeighborList) {
+		public NeighborDLB2opt(NeighborList neighborList) {
 			this.neighborList = neighborList;
-			this.invNeighborList = invNeighborList;
 		}
 
 		override public int[] Run(TSPInstance instance) {
@@ -56,10 +53,6 @@ namespace TSPSolver.solver {
 							selectNodeList.Add(w);
 							selectNodeList.Add(vn);
 							selectNodeList.Add(wn);
-							this.invNeighborList.AddNearestNodes(selectNodeList, v);
-							this.invNeighborList.AddNearestNodes(selectNodeList, w);
-							this.invNeighborList.AddNearestNodes(selectNodeList, vn);
-							this.invNeighborList.AddNearestNodes(selectNodeList, wn);
 #if DEBUG
 							length += add_gain - remove_gain;
 							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));

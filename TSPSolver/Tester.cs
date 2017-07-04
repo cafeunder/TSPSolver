@@ -12,9 +12,7 @@ namespace TSPSolver {
 			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
 			NeighborList neighborList = new NeighborList();
 			neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
-			InverseNeighborList invNeighborList = new InverseNeighborList();
-			invNeighborList.ReadFrom(@"data/" + instanceName + ".inv.neighbor");
-			Solver solver = new NeighborDLB2opt(neighborList, invNeighborList);
+			Solver solver = new NeighborDLB2opt(neighborList);
 
 			int[] tour = solver.Run(instance);
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));
