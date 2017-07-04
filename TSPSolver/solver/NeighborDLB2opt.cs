@@ -4,7 +4,7 @@ using TSPSolver.structure;
 
 namespace TSPSolver.solver {
 	/*
-	 * 近傍リストあり、DontLookBitなし
+	 * 近傍リストあり、DontLookBitあり
 	 */
 	public class NeighborDLB2opt : Solver {
 		// 近傍リスト
