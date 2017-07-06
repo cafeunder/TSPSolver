@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using TSPSolver.solver;
 
-namespace TSPSolver.neighborList {
+namespace TSPSolver.solver.util {
 	/// <summary>
 	/// 近傍リストを表すクラス
 	/// </summary>

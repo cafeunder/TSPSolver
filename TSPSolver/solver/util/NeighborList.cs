@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using TSPSolver.common;
 
-namespace TSPSolver.neighborList {
+namespace TSPSolver.solver.util {
 	/// <summary>
 	/// 近傍リストを表すクラス
 	/// </summary>

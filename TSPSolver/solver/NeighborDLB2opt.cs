@@ -1,6 +1,7 @@
 using System;
-using TSPSolver.neighborList;
 using TSPSolver.structure;
+using TSPSolver.common;
+using TSPSolver.solver.util;
 
 namespace TSPSolver.solver {
 	/*

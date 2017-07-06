@@ -1,7 +1,8 @@
 ﻿
 using System;
-using TSPSolver.neighborList;
 using TSPSolver.solver;
+using TSPSolver.common;
+using TSPSolver.solver.util;
 
 namespace TSPSolver {
 	public class Tester {
@@ -10,9 +11,12 @@ namespace TSPSolver {
 			string instanceName = "ca4663";
 
 			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
+			/*
 			NeighborList neighborList = new NeighborList();
 			neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
 			Solver solver = new NeighborDLB2opt(neighborList);
+			*/
+			Solver solver = new Naive2opt();
 
 			int[] tour = solver.Run(instance);
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));

@@ -1,7 +1,7 @@
 
 using System;
 
-namespace TSPSolver {
+namespace TSPSolver.common {
 	/// <summary>
 	/// シングルトン実装で使いまわすSystem.Random
 	/// </summary>

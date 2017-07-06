@@ -1,4 +1,5 @@
 using System;
+using TSPSolver.common;
 using TSPSolver.structure;
 
 namespace TSPSolver.solver {

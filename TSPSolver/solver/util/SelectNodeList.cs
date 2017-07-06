@@ -1,5 +1,7 @@
 
-namespace TSPSolver.solver {
+using TSPSolver.common;
+
+namespace TSPSolver.solver.util {
 	/// <summary>
 	/// 選択候補リストを実装するクラス
 	/// </summary>

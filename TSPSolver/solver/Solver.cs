@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using TSPSolver.common;
 
 namespace TSPSolver.solver {
 	/// <summary>
