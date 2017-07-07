@@ -1,5 +1,6 @@
 
 using System;
+using TSPSolver.common;
 
 namespace TSPSolver.structure {
 	/// <summary>

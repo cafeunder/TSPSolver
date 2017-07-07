@@ -1,7 +1,8 @@
 using System;
 using System.Diagnostics;
-using TSPSolver.neighborList;
+using TSPSolver.common;
 using TSPSolver.solver;
+using TSPSolver.solver.util;
 
 namespace TSPSolver {
 	public class Benchmarker {
