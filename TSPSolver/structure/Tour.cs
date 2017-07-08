@@ -57,22 +57,13 @@ namespace TSPSolver.structure {
 		/// <param name="v1">ノード1</param>
 		/// <param name="v2">ノード2</param>
 		/// <param name="forward">順方向か？</param>
-		public void Flip(int v1, int v2, bool forward) {
+		public void Flip(int va, int vb, int vc, int vd) {
 			// va - vb      va   vb
 			//          ->     X     と考える
 			// vc - vd      vc   vd
-			int ia, ib, ic, id;
-			if (forward) {
-				ia = this.indexArray[v1];
-				ib = (ia + 1) % this.NodeArray.Length;
-				ic = this.indexArray[v2];
-				id = (ic + 1) % this.NodeArray.Length;
-			} else {
-				ib = this.indexArray[v1];
-				ia = (ib + this.NodeArray.Length - 1) % this.NodeArray.Length;
-				id = this.indexArray[v2];
-				ic = (id + this.NodeArray.Length - 1) % this.NodeArray.Length;
-			}
+			int ia = this.indexArray[va], ib = this.indexArray[vb],
+				ic = this.indexArray[vc], id = this.indexArray[vd];
+
 
 			// va,vd間と、vb,vc間のインデックスの距離を計算
 			int length_ad = (ia - id);

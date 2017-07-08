@@ -49,7 +49,11 @@ namespace TSPSolver.solver {
 						int add_gain = this.neighborList.DistanceTable[v][j] + instance.CalcDistance(vn, wn);
 
 						if (add_gain < remove_gain) {
-							tour.Flip(v, w, forward);
+							if (forward) {
+								tour.Flip(v, vn, w, wn);
+							} else {
+								tour.Flip(vn, v, wn, w);
+							}
 							// DLB’Ç‰Á
 							selectNodeList.Add(w);
 							selectNodeList.Add(vn);

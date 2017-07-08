@@ -33,7 +33,7 @@ namespace TSPSolver.solver {
 					int add_gain = instance.CalcDistance(v, w) + instance.CalcDistance(vn, wn);
 
 					if (add_gain < remove_gain) {
-						tour.Flip(v, w, true);
+						tour.Flip(v, vn, w, wn);
 #if DEBUG
 						length += add_gain - remove_gain;
 						Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));
