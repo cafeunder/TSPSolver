@@ -17,9 +17,9 @@ namespace TSPSolver.solver {
 
 		override public int[] Run(TSPInstance instance) {
 			// ツアーを生成
-			Tour tour = new Tour(instance.Dimension);
+			Tour tour = new CityArrayTour(instance.Dimension);
 #if DEBUG
-			int length = instance.CalcTourLength(tour.NodeArray);
+			int length = instance.CalcTourLength(tour.GetTour());
 #endif
 			
 			// 全てのエッジが改善不可能になるまで続ける
@@ -55,7 +55,7 @@ namespace TSPSolver.solver {
 							}
 #if DEBUG
 							length += add_gain - remove_gain;
-							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));
+							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.GetTour()));
 #endif
 							// 最初からやりなおす
 							i = 0;
@@ -67,7 +67,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.NodeArray;
+			return tour.GetTour();
 		}
 	}
 }

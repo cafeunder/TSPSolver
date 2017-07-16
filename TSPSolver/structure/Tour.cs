@@ -1,122 +1,41 @@
 
 using System;
-using TSPSolver.common;
 
 namespace TSPSolver.structure {
 	/// <summary>
 	/// TSPのツアーを表すクラス
 	/// </summary>
-	public class Tour {
+	public abstract class Tour {
 		/// <summary>
-		/// ノード配列
+		/// ある都市の次に来る都市を返す
 		/// </summary>
-		public int[] NodeArray{ get; private set; }
-		// あるノードiがNodeArray上のどの位置にあるかを表す配列
-		private int[] indexArray;
-
-		public Tour(int nodeNum) {
-			this.NodeArray = new int[nodeNum];
-			this.indexArray = new int[nodeNum];
-			for (int i = 0; i < this.NodeArray.Length; i++) {
-				this.NodeArray[i] = i;
-			}
-
-			// フィッシャー法を用いて配列をシャッフル
- 			for (int i = this.NodeArray.Length - 1; i > 0; i--) {
-				int j = SRandom.Instance.NextInt(i + 1);
-				int swap = this.NodeArray[i];
-				this.NodeArray[i] = this.NodeArray[j];
-				this.NodeArray[j] = swap;
-
-				// this.nodeArray[i]のインデックスは確定したのでインデックス配列に追加
-				this.indexArray[this.NodeArray[i]] = i; 
-			}
-		}
+		abstract public int NextID(int city);
 
 		/// <summary>
-		/// あるノードの次に来るノードを返す
+		/// ある都市の前にある都市を返す
 		/// </summary>
-		public int NextID(int node) {
-			// nodeの次のインデックスのノードを返す
-			// ただし、インデックスが配列の長さを超えた場合は0に戻す
-			return this.NodeArray[(this.indexArray[node] + 1) % this.NodeArray.Length];
-		}
-
-		/// <summary>
-		/// あるノードの前にあるノードを返す
-		/// </summary>
-		public int PrevID(int node) {
-			// nodeの前のインデックスのノードを返す
-			// だだし、インデックスが0を割った場合は配列の長さ-1とする
-			return this.NodeArray[(this.indexArray[node] + this.NodeArray.Length - 1) % this.NodeArray.Length];
-		}
-
+		abstract public int PrevID(int city);
+		
 		/// <summary>
 		/// エッジの入れ替えに相当する配列の反転を行う
 		/// </summary>
-		/// <param name="v1">ノード1</param>
-		/// <param name="v2">ノード2</param>
-		/// <param name="forward">順方向か？</param>
-		public void Flip(int va, int vb, int vc, int vd) {
-			// va - vb      va   vb
-			//          ->     X     と考える
-			// vc - vd      vc   vd
-			int ia = this.indexArray[va], ib = this.indexArray[vb],
-				ic = this.indexArray[vc], id = this.indexArray[vd];
+		abstract public void Flip(int va, int vb, int vc, int vd);
 
-
-			// va,vd間と、vb,vc間のインデックスの距離を計算
-			int length_ad = (ia - id);
-			if (length_ad < 0) { length_ad += this.NodeArray.Length; }
-			int length_cb = (ic - ib);
-			if (length_cb < 0) { length_cb += this.NodeArray.Length; }
-
-			// インデックスが近い組を反転位置とする
-			int head, tail, length;
-			if (length_ad < length_cb) {
-				head = id;
-				tail = ia;
-				length = length_ad + 1;
-			} else {
-				head = ib;
-				tail = ic;
-				length = length_cb + 1;
-			}
-
-			// 決められた節点間で反転を行う
-			for (int i = 0; i < length / 2; i++) {
-				int temp = this.NodeArray[head];
-				this.NodeArray[head] = this.NodeArray[tail];
-				this.NodeArray[tail] = temp;
-				this.indexArray[this.NodeArray[head]] = head;
-				this.indexArray[this.NodeArray[tail]] = tail;
-
-				head = (head + 1) % this.NodeArray.Length;
-				tail = (tail + this.NodeArray.Length - 1) % this.NodeArray.Length;
-			}
-		}
+		/// <summary>
+		/// 都市を訪問順に並べた配列を返す
+		/// </summary>
+		abstract public int[] GetTour();
 
 		/// <summary>
 		/// オーバーライドしたToStringメソッド
 		/// </summary>
 		override public string ToString() {
+			int[] tour = this.GetTour();
 			string result = "";
-			foreach (int n in this.NodeArray) {
+			foreach (int n in tour) {
 				result += n + ",";
 			}
 			return result;
-		}
-
-		/// <summary>
-		/// デバッグ用ログ
-		/// </summary>
-		public void DebugLog() {
-			Console.WriteLine("node : " + this);
-			string result = "indx : ";
-			foreach (int n in this.indexArray) {
-				result += n + ",";
-			}
-			Console.WriteLine(result);
 		}
 	}
 }

@@ -99,7 +99,8 @@ namespace TSPSolver {
 				*/
 				NeighborList neighborList = new NeighborList();
 				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
-				Benchmarker.Run(instance, new NeighborDLB2opt(neighborList));
+				InverseNeighborList invNeighborList = new InverseNeighborList(neighborList);
+				Benchmarker.Run(instance, new NeighborInvDLB2opt(neighborList, invNeighborList));
 
 				// Benchmarker.RunNeighbor(instanceName);
 			}

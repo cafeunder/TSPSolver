@@ -17,9 +17,9 @@ namespace TSPSolver.solver {
 
 		override public int[] Run(TSPInstance instance) {
 			// ÉcÉAÅ[Çê∂ê¨
-			Tour tour = new Tour(instance.Dimension);
+			Tour tour = new CityArrayTour(instance.Dimension);
 #if DEBUG
-			int length = instance.CalcTourLength(tour.NodeArray);
+			int length = instance.CalcTourLength(tour.GetTour());
 #endif
 			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
 			
@@ -60,7 +60,7 @@ namespace TSPSolver.solver {
 							selectNodeList.Add(wn);
 #if DEBUG
 							length += add_gain - remove_gain;
-							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));
+							Console.WriteLine(length + ", " + instance.CalcTourLength(tour.GetTour()));
 #endif
 							goto FINISH;
 						}
@@ -70,7 +70,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.NodeArray;
+			return tour.GetTour();
 		}
 	}
 }

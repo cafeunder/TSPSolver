@@ -9,18 +9,18 @@ namespace TSPSolver.solver {
 	public class Naive2opt : Solver {
 		override public int[] Run(TSPInstance instance) {
 			// ツアーを生成
-			Tour tour = new Tour(instance.Dimension);
+			Tour tour = new CityArrayTour(instance.Dimension);
 #if DEBUG
-			int length = instance.CalcTourLength(tour.NodeArray);
+			int length = instance.CalcTourLength(tour.GetTour());
 #endif
 
-			// ランダムなノードsから始めて全てのノードに接続しているエッジを検索する
+			// ランダムな都市sから始めて全ての都市に接続しているエッジを検索する
 			int si = SRandom.Instance.NextInt(instance.Dimension);
 			for (int i = 0; i < instance.Dimension; i++) {
 				int v = (si + i) % instance.Dimension;
 				int vn = tour.NextID(v);
 
-				// ランダムなノードsから始めて全てのノードに接続しているエッジを検索する
+				// ランダムな都市sから始めて全ての都市に接続しているエッジを検索する
 				int sj = SRandom.Instance.NextInt(instance.Dimension);
 				for (int j = 0; j < instance.Dimension; j++) {
 					int w = (sj + j) % instance.Dimension;
@@ -36,7 +36,7 @@ namespace TSPSolver.solver {
 						tour.Flip(v, vn, w, wn);
 #if DEBUG
 						length += add_gain - remove_gain;
-						Console.WriteLine(length + ", " + instance.CalcTourLength(tour.NodeArray));
+						Console.WriteLine(length + ", " + instance.CalcTourLength(tour.GetTour()));
 #endif
 						// 最初からやりなおす
 						i = 0;
@@ -47,7 +47,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.NodeArray;
+			return tour.GetTour();
 		}
 	}
 }
