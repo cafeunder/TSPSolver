@@ -22,12 +22,30 @@ namespace TSPSolver {
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));
 			*/
 			SRandom.Intialize(2);
-			Tour tour = new TwoLevelTreeTour(14);
-			Console.WriteLine(tour);
+			for (int i = 0; i < 1000; i++) {
+				// int size = SRandom.Instance.NextInt(10000) + 10;
+				int size = 13;
+				TwoLevelTreeTour tour = new TwoLevelTreeTour(size);
 
-			SRandom.Intialize(2);
-			tour = new CityArrayTour(14);
-			Console.WriteLine(tour);
+				int va = SRandom.Instance.NextInt(size);
+				int vc;
+				do {
+					vc = SRandom.Instance.NextInt(size);
+				} while(vc == va || vc == tour.NextID(va) || va == tour.NextID(vc));
+
+				int[] before = tour.GetTour();
+				tour.Flip(va, tour.NextID(va), vc, tour.NextID(vc));
+				int[] after = tour.GetTour();
+
+				bool miss = false;
+				for (int j = 0; j < size; j++) {
+					if (before[j] != after[j]) { miss = true; }
+				}
+
+				if (miss) {
+					Console.WriteLine("死");
+				}
+			}
 		}
 	}
 }
