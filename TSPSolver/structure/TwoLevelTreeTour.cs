@@ -24,35 +24,35 @@ namespace TSPSolver.structure {
 		/// </summary>
 		private int segNum;
 		/// <summary>
-		/// [i] : セグメントiの向き
+		/// segOrietation[i] : セグメントiの向き
 		/// </summary>
 		private int[] segOrientation;
 		/// <summary>
-		/// [i][j] : セグメントjがiの向きのときに，先頭の都市から次にたどるセグメント
+		/// segLink[i][j] : セグメントjがiの向きのときに，先頭の都市から次にたどるセグメント
 		/// </summary>
 		private int[][] segLink;
 		/// <summary>
-		/// [i] : セグメントiのサイズ
+		/// segSize[i] : セグメントiのサイズ
 		/// </summary>
 		private int[] segSize;
 		/// <summary>
-		/// [i] : ID:0のセグメントからID:iのセグメントに到達するのに必要なリンク数．
+		/// segLinkOrder[i] : ID:0のセグメントからID:iのセグメントに到達するのに必要なリンク数．
 		/// </summary>
 		private int[] segLinkOrder;
 		/// <summary>
-		/// [i][j] : セグメントjの向きがiのときの末尾の都市
+		/// segTailCity[i][j] : セグメントjの向きがiのときの末尾の都市
 		/// </summary>
 		private int[][] segTailCity;
 		/// <summary>
-		/// [i] : 都市iが属するセグメント
+		/// cityToSegment[i] : 都市iが属するセグメント
 		/// </summary>
 		private int[] cityToSegment;
 		/// <summary>
-		/// [i][j] : セグメントの方向がiのとき，セグメント上で都市jの次に来る都市(ないなら-1)
+		/// cityLink[i][j] : セグメントの方向がiのとき，セグメント上で都市jの次に来る都市(ないなら-1)
 		/// </summary>
 		private int[][] cityLink;
 		/// <summary>
-		/// [i] : セグメントの向きをNEXTにしたときの，都市iのセグメント上での位置
+		/// cityPosition[i] : セグメントの向きをNEXTにしたときの，都市iのセグメント上での位置
 		/// </summary>
 		private int[] cityPosition;
 

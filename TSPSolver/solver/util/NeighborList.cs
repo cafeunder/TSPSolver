@@ -79,7 +79,7 @@ namespace TSPSolver.solver.util {
 							count++;
 						}
 					}
-				}				
+				}
 			}
 		}
 
