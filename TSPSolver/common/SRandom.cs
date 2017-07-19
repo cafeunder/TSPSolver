@@ -8,10 +8,10 @@ namespace TSPSolver.common {
 	public class SRandom {
 		private Random rand;
 
-		public SRandom() {
+		private SRandom() {
 			this.rand = new Random();
 		}
-		public SRandom(int seed) {
+		private SRandom(int seed) {
 			this.rand = new Random(seed);
 		}
 
