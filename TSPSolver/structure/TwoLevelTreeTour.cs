@@ -3,11 +3,23 @@ using TSPSolver.common;
 
 namespace TSPSolver.structure {
 	public class TwoLevelTreeTour : Tour {
+		/// <summary>
+		/// QÆ“n‚µ‚Åó‚¯æ‚Á‚½a,b‚Ì’l‚ğ“ü‚ê‘Ö‚¦‚é
+		/// </summary>
 		private static void Swap(ref int a, ref int b) {
 			int temp = a;
 			a = b;
 			b = temp;
 		}
+		/// <summary>
+		/// —^‚¦‚ç‚ê‚½•ûŒü‚Æ‹t•ûŒü‚ğ•Ô‚·ƒƒ\ƒbƒh
+		/// </summary>
+		/// <param name="ort">•ûŒü</param>
+		/// <returns>ort‚Ì‹t•ûŒü</returns>
+		private static int Turn(int ort) {
+			return (ort == PREV) ? NEXT : PREV;
+		}
+
 		private const int NEXT = 0;
 		private const int PREV = 1;
 
@@ -365,15 +377,6 @@ namespace TSPSolver.structure {
 				prevCity = this.segTailCity[ort][seg];
 			}
 			return prevCity;
-		}
-
-		/// <summary>
-		/// —^‚¦‚ç‚ê‚½•ûŒü‚Æ‹t•ûŒü‚ğ•Ô‚·ƒƒ\ƒbƒh
-		/// </summary>
-		/// <param name="ort">•ûŒü</param>
-		/// <returns>ort‚Ì‹t•ûŒü</returns>
-		public static int Turn(int ort) {
-			return (ort == PREV) ? NEXT : PREV;
 		}
 
 		public void DebugLog() {

@@ -8,19 +8,18 @@ using TSPSolver.structure;
 namespace TSPSolver {
 	public class Tester {
 		public static void Main(string[] args) {
-			/*
-			SRandom.Intialize(0);
-			string instanceName = "ca4663";
+			string instanceName = "bm33708";
 
 			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
 			NeighborList neighborList = new NeighborList();
 			neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
-			Solver solver = new NeighborDLB2opt(neighborList);
-			Solver solver = new Naive2opt();
+			InverseNeighborList invNeighborList = new InverseNeighborList(neighborList);
+			Solver solver = new NeighborInvDLB2opt(neighborList, invNeighborList);
+			// Solver solver = new Naive2opt();
 
 			int[] tour = solver.Run(instance);
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));
-			*/
+			/*
 			SRandom.Intialize(2);
 			for (int i = 0; i < 1000; i++) {
 				// int size = SRandom.Instance.NextInt(10000) + 10;
@@ -46,6 +45,7 @@ namespace TSPSolver {
 					Console.WriteLine("死");
 				}
 			}
+			*/
 		}
 	}
 }

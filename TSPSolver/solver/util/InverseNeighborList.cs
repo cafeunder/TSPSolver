@@ -66,32 +66,5 @@ namespace TSPSolver.solver.util {
 				selectNodeList.Add(this.InvNeighborNodes[v][i]);
 			}
 		}
-
-		public void WriteTo(string filepath) {
-			using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(filepath))) {
-				bw.Write(this.dimension);
-				bw.Write(this.NeighborNum);
-				for (int i = 0; i < this.InvNeighborNodes.Length; i++) {
-					for (int j = 0; j < this.InvNeighborNodes[i].Length; j++) {
-						bw.Write(this.InvNeighborNodes[i][j]);
-					}
-				}
-			}
-		}
-
-		public void ReadFrom(string filepath) {
-			using (BinaryReader br = new BinaryReader(File.OpenRead(filepath))) {
-				this.dimension = br.ReadInt32();
-				this.NeighborNum = br.ReadInt32();
-				this.InvNeighborNodes = new int[this.dimension][];
-
-				for (int i = 0; i < this.InvNeighborNodes.Length; i++) {
-					this.InvNeighborNodes[i] = new int[this.NeighborNum];
-					for (int j = 0; j < this.InvNeighborNodes[i].Length; j++) {
-						this.InvNeighborNodes[i][j] = br.ReadInt32();
-					}
-				}
-			}
-		}
 	}
 }

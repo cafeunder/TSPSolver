@@ -15,7 +15,6 @@ namespace TSPSolver {
 				NeighborList neighbor_list = new NeighborList(instance, 50);
 				InverseNeighborList inv_neighbor_list = new InverseNeighborList(neighbor_list);
 				neighbor_list.WriteTo(@"data/" + instanceName + ".neighbor");
-				inv_neighbor_list.WriteTo(@"data/" + instanceName + ".inv.neighbor");
 			}
 		}
 	}

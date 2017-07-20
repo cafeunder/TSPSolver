@@ -34,7 +34,10 @@ namespace TSPSolver.structure {
 		override public int NextID(int city) {
 			// cityの次のインデックスの都市を返す
 			// ただし、インデックスが配列の長さを超えた場合は0に戻す
-			return this.cityArray[(this.indexArray[city] + 1) % this.cityArray.Length];
+			if (this.indexArray[city] < this.cityArray.Length - 1) {
+				return this.cityArray[this.indexArray[city] + 1];
+			}
+			return this.cityArray[0];
 		}
 
 		/// <summary>
@@ -43,7 +46,10 @@ namespace TSPSolver.structure {
 		override public int PrevID(int city) {
 			// cityの前のインデックスの都市を返す
 			// だだし、インデックスが0を割った場合は配列の長さ-1とする
-			return this.cityArray[(this.indexArray[city] + this.cityArray.Length - 1) % this.cityArray.Length];
+			if (this.indexArray[city] > 0) {
+				return this.cityArray[this.indexArray[city] - 1];
+			}
+			return this.cityArray[this.cityArray.Length - 1];
 		}
 
 		/// <summary>
@@ -83,8 +89,10 @@ namespace TSPSolver.structure {
 				this.indexArray[this.cityArray[head]] = head;
 				this.indexArray[this.cityArray[tail]] = tail;
 
-				head = (head + 1) % this.cityArray.Length;
-				tail = (tail + this.cityArray.Length - 1) % this.cityArray.Length;
+				head = head + 1;
+				if (head == this.cityArray.Length) { head = 0; }
+				tail = tail - 1;
+				if (tail == -1) { tail = this.cityArray.Length - 1;}
 			}
 		}
 
