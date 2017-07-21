@@ -14,17 +14,14 @@ namespace TSPSolver.structure {
 			this.indexArray = new int[cityNum];
 			for (int i = 0; i < this.cityArray.Length; i++) {
 				this.cityArray[i] = i;
+				this.indexArray[i] = i;
 			}
 
 			// フィッシャー法を用いて配列をシャッフル
  			for (int i = this.cityArray.Length - 1; i > 0; i--) {
 				int j = SRandom.Instance.NextInt(i + 1);
-				int swap = this.cityArray[i];
-				this.cityArray[i] = this.cityArray[j];
-				this.cityArray[j] = swap;
-
-				// this.cityArray[i]のインデックスは確定したのでインデックス配列に追加
-				this.indexArray[this.cityArray[i]] = i; 
+				Common.Swap(ref indexArray[cityArray[i]], ref indexArray[cityArray[j]]);
+				Common.Swap(ref cityArray[i], ref cityArray[j]);
 			}
 		}
 
@@ -62,7 +59,6 @@ namespace TSPSolver.structure {
 			int ia = this.indexArray[va], ib = this.indexArray[vb],
 				ic = this.indexArray[vc], id = this.indexArray[vd];
 
-
 			// va,vd間と、vb,vc間のインデックスの距離を計算
 			int length_ad = (ia - id);
 			if (length_ad < 0) { length_ad += this.cityArray.Length; }
@@ -83,11 +79,8 @@ namespace TSPSolver.structure {
 
 			// 決められた節点間で反転を行う
 			for (int i = 0; i < length / 2; i++) {
-				int temp = this.cityArray[head];
-				this.cityArray[head] = this.cityArray[tail];
-				this.cityArray[tail] = temp;
-				this.indexArray[this.cityArray[head]] = head;
-				this.indexArray[this.cityArray[tail]] = tail;
+				Common.Swap(ref indexArray[cityArray[head]], ref indexArray[cityArray[tail]]);
+				Common.Swap(ref cityArray[head], ref cityArray[tail]);
 
 				head = head + 1;
 				if (head == this.cityArray.Length) { head = 0; }

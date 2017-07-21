@@ -4,9 +4,9 @@ using TSPSolver.common;
 using TSPSolver.solver.util;
 
 namespace TSPSolver.solver {
-	/*
-	 * 近傍リストあり、DontLookBitあり
-	 */
+	/// <summary>
+	/// 近傍リストあり、DontLookBitあり
+	/// </summary>
 	public class NeighborDLB2opt : Solver {
 		// 近傍リスト
 		NeighborList neighborList;
@@ -15,7 +15,8 @@ namespace TSPSolver.solver {
 			this.neighborList = neighborList;
 		}
 
-		override public int[] Run(TSPInstance instance) {
+		override public (int, int[]) Run(TSPInstance instance) {
+			int selectCount = 0;
 			// ツアーを生成
 			Tour tour = new CityArrayTour(instance.Dimension);
 #if DEBUG
@@ -27,6 +28,7 @@ namespace TSPSolver.solver {
 			int si = SRandom.Instance.NextInt(instance.Dimension);
 			while (selectNodeList.Size != 0) {
 				int v = selectNodeList.GetRand();
+				selectCount++;
 
 				// 正順と逆順のエッジを確かめる
 				for (int d = 0; d < 2; d++) {
@@ -70,7 +72,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.GetTour();
+			return (selectCount, tour.GetTour());
 		}
 	}
 }

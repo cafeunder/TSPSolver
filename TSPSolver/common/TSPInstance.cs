@@ -36,7 +36,10 @@ namespace TSPSolver.common {
 				if (this.Dimension == 0) {
 					throw new System.Exception("入力されたインスタンスファイルに次元数の指定がありません．");
 				}
-				this.Coordinate = new double[this.Dimension][];
+				this.Coordinate = new double[2][];
+				for (int i = 0; i < this.Coordinate.Length; i++) {
+					this.Coordinate[i] = new double[this.Dimension];
+				}
 
 				delimiter = new Regex(@"\s+");
 				// 座標読み込み
@@ -44,16 +47,15 @@ namespace TSPSolver.common {
 					string line = sr.ReadLine();
 					string[] record = delimiter.Split(line);
 
-					this.Coordinate[i] = new double[2];
-					this.Coordinate[i][0] = double.Parse(record[1]);
-					this.Coordinate[i][1] = double.Parse(record[2]);
+					this.Coordinate[0][i] = double.Parse(record[1]);
+					this.Coordinate[1][i] = double.Parse(record[2]);
 				}
 			}
 		}
 
 		public int CalcDistance(int v0, int v1) {
-			double dx = this.Coordinate[v0][0] - this.Coordinate[v1][0];
-			double dy = this.Coordinate[v0][1] - this.Coordinate[v1][1];
+			double dx = this.Coordinate[0][v0] - this.Coordinate[0][v1];
+			double dy = this.Coordinate[1][v0] - this.Coordinate[1][v1];
 
 			return (int)(Math.Sqrt(dx * dx + dy * dy) + 0.5);
 		}

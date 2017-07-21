@@ -64,15 +64,9 @@ namespace TSPSolver.solver.util {
 								break;
 							}
 
-							// 近傍配列のスワップ
-							int temp = this.NeighborNodes[i][k - 1];
-							this.NeighborNodes[i][k - 1] = this.NeighborNodes[i][k];
-							this.NeighborNodes[i][k] = temp;
-
-							// 距離テーブルのスワップ
-							temp = this.DistanceTable[i][k - 1];
-							this.DistanceTable[i][k - 1] = this.DistanceTable[i][k];
-							this.DistanceTable[i][k] = temp;
+							// 近傍配列と距離テーブルのスワップ
+							Common.Swap(ref this.NeighborNodes[i][k - 1], ref this.NeighborNodes[i][k]);
+							Common.Swap(ref this.DistanceTable[i][k - 1], ref this.DistanceTable[i][k]);
 						}
 
 						if (count < this.NeighborNum - 1) {

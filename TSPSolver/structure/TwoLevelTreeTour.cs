@@ -4,14 +4,6 @@ using TSPSolver.common;
 namespace TSPSolver.structure {
 	public class TwoLevelTreeTour : Tour {
 		/// <summary>
-		/// 参照渡しで受け取ったa,bの値を入れ替える
-		/// </summary>
-		private static void Swap(ref int a, ref int b) {
-			int temp = a;
-			a = b;
-			b = temp;
-		}
-		/// <summary>
 		/// 与えられた方向と逆方向を返すメソッド
 		/// </summary>
 		/// <param name="ort">方向</param>
@@ -301,15 +293,15 @@ namespace TSPSolver.structure {
 
 			// 入れ替えが少ない方をt1とする
 			if (length_t1 > length_t2) {
-				Swap(ref length_t1, ref length_t2);
-				Swap(ref t1s, ref t2s);
-				Swap(ref t1e, ref t2e);
-				Swap(ref t1s_seg, ref t2s_seg);
-				Swap(ref t1e_seg, ref t2e_seg);
-				Swap(ref t1s_pos_seg, ref t2s_pos_seg);
-				Swap(ref t1e_pos_seg, ref t2e_pos_seg);
-				Swap(ref t1s_ort, ref t2s_ort);
-				Swap(ref t1e_ort, ref t2e_ort);
+				Common.Swap(ref length_t1, ref length_t2);
+				Common.Swap(ref t1s, ref t2s);
+				Common.Swap(ref t1e, ref t2e);
+				Common.Swap(ref t1s_seg, ref t2s_seg);
+				Common.Swap(ref t1e_seg, ref t2e_seg);
+				Common.Swap(ref t1s_pos_seg, ref t2s_pos_seg);
+				Common.Swap(ref t1e_pos_seg, ref t2e_pos_seg);
+				Common.Swap(ref t1s_ort, ref t2s_ort);
+				Common.Swap(ref t1e_ort, ref t2e_ort);
 			}
 
 			Console.WriteLine(this);

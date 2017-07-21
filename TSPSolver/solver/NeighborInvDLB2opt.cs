@@ -4,30 +4,30 @@ using TSPSolver.common;
 using TSPSolver.solver.util;
 
 namespace TSPSolver.solver {
-	/*
-	 * 近傍リストあり、DontLookBitあり
-	 */
+	/// <summary>
+	/// 近傍リストあり、DontLookBitあり
+	/// </summary>
 	public class NeighborInvDLB2opt : Solver {
 		// 近傍リスト
-		NeighborList neighborList;
-		InverseNeighborList invNeighborList;
+		private NeighborList neighborList;
+		private InverseNeighborList invNeighborList;
 
 		public NeighborInvDLB2opt(NeighborList neighborList, InverseNeighborList invNeighborList) {
 			this.neighborList = neighborList;
 			this.invNeighborList = invNeighborList;
 		}
 
-		override public int[] Run(TSPInstance instance) {
-			// ツアーを生成
-			Tour tour = new CityArrayTour(instance.Dimension);
+		override public (int, int[]) Run(TSPInstance instance) {
+			int selectCount = 0;
 #if DEBUG
 			int length = instance.CalcTourLength(tour.GetTour());
 #endif
+			Tour tour = new CityArrayTour(instance.Dimension);
 			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
 			
-			int si = SRandom.Instance.NextInt(instance.Dimension);
 			while (selectNodeList.Size != 0) {
 				int v = selectNodeList.GetRand();
+				selectCount++;
 
 				// 正順と逆順のエッジを確かめる
 				for (int d = 0; d < 2; d++) {
@@ -75,7 +75,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.GetTour();
+			return (selectCount, tour.GetTour());
 		}
 	}
 }

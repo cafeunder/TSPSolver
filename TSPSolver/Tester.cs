@@ -17,7 +17,7 @@ namespace TSPSolver {
 			Solver solver = new NeighborInvDLB2opt(neighborList, invNeighborList);
 			// Solver solver = new Naive2opt();
 
-			int[] tour = solver.Run(instance);
+			(int selectNum, int[] tour) = solver.Run(instance);
 			Console.WriteLine("length : " + instance.CalcTourLength(tour));
 			/*
 			SRandom.Intialize(2);

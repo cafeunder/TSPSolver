@@ -11,4 +11,8 @@
     <DefineConstants>RELEASE;NETCOREAPP1_1</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+  </ItemGroup>
+
 </Project>

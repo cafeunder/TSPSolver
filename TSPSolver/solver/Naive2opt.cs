@@ -3,11 +3,12 @@ using TSPSolver.common;
 using TSPSolver.structure;
 
 namespace TSPSolver.solver {
-	/*
-	 * 近傍リストなし、DontLookBitなし
-	 */
+	/// <summary>
+	/// 近傍リストなし、DontLookBitなし
+	/// </summary>
 	public class Naive2opt : Solver {
-		override public int[] Run(TSPInstance instance) {
+		override public (int, int[]) Run(TSPInstance instance) {
+			int selectCount = 0;
 			// ツアーを生成
 			Tour tour = new CityArrayTour(instance.Dimension);
 #if DEBUG
@@ -18,6 +19,7 @@ namespace TSPSolver.solver {
 			int si = SRandom.Instance.NextInt(instance.Dimension);
 			for (int i = 0; i < instance.Dimension; i++) {
 				int v = (si + i) % instance.Dimension;
+				selectCount++;
 				int vn = tour.NextID(v);
 
 				// ランダムな都市sから始めて全ての都市に接続しているエッジを検索する
@@ -47,7 +49,7 @@ namespace TSPSolver.solver {
 			FINISH:;
 			}
 
-			return tour.GetTour();
+			return (selectCount, tour.GetTour());
 		}
 	}
 }

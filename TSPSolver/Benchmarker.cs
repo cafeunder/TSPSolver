@@ -26,12 +26,15 @@ namespace TSPSolver {
 			// 計算時間の2乗の合計
 			double time_sum = 0;
 			double time_sum2 = 0;
+			// 選択回数の合計、選択回数の2乗の合計
+			double select_sum = 0;
+			double select_sum2 = 0;
 
 			Stopwatch sw = new Stopwatch();
 			for (int i = 0; i < trial_num; i++) {
 				sw.Start();
 				// 計算する
-				int[] tour = solver.Run(instance);
+				(int selectNum, int[] tour) = solver.Run(instance);
 				sw.Stop();
 
 				// 経路長の計上
@@ -42,6 +45,10 @@ namespace TSPSolver {
 				// 計算時間の計上
 				time_sum += sw.ElapsedMilliseconds;
 				time_sum2 += (double)sw.ElapsedMilliseconds * sw.ElapsedMilliseconds;
+
+				// 選択回数の計上
+				select_sum += selectNum;
+				select_sum2 += selectNum * (double)selectNum;
 				sw.Reset();
 			}
 
@@ -49,10 +56,13 @@ namespace TSPSolver {
 			double length_sd = Math.Sqrt(length_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * length_ave * length_ave);
 			double time_ave = (time_sum / trial_num);
 			double time_sd = Math.Sqrt(time_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * time_ave * time_ave);
+			double select_ave = (select_sum / trial_num);
+			double select_sd = Math.Sqrt(select_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * select_ave * select_ave);
 
 			Console.WriteLine("result : ave[sd]");
 			Console.WriteLine("length : " + length_ave + "[" + length_sd + "]");
 			Console.WriteLine("time   : " + time_ave + "[" + time_sd + "]");
+			Console.WriteLine("select   : " + select_ave + "[" + select_sd + "]");
 		}
 
 		/// <summary>

@@ -5,6 +5,6 @@ namespace TSPSolver.solver {
 	/// TSPソルバを表す抽象クラス
 	/// </summary>
 	public abstract class Solver {
-		abstract public int[] Run(TSPInstance instance);
+		abstract public (int, int[]) Run(TSPInstance instance);
 	}
 }
