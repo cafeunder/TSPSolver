@@ -19,12 +19,12 @@ namespace TSPSolver.solver {
 
 		override public (int, int[]) Run(TSPInstance instance) {
 			int selectCount = 0;
-#if DEBUG
-			int length = instance.CalcTourLength(tour.GetTour());
-#endif
 			Tour tour = new CityArrayTour(instance.Dimension);
 			SelectNodeList selectNodeList = new SelectNodeList(instance.Dimension);
-			
+
+#if DEBUG
+			int length = instance.CalcTourLength(tour.GetTour());
+#endif			
 			while (selectNodeList.Size != 0) {
 				int v = selectNodeList.GetRand();
 				selectCount++;
