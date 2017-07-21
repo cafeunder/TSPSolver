@@ -5,7 +5,7 @@ using TSPSolver.common;
 namespace TSPSolver.structure {
 	public class CityArrayTour : Tour {
 		// “ss”z—ñ
-		public int[] cityArray;
+		private int[] cityArray;
 		// ‚ ‚é“ssi‚ªcityArrayã‚Ì‚Ç‚ÌˆÊ’u‚É‚ ‚é‚©‚ğ•\‚·”z—ñ
 		private int[] indexArray;
 
