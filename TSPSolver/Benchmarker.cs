@@ -19,7 +19,7 @@ namespace TSPSolver {
 		/// </summary>
 		public static void Run(TSPInstance instance, Solver solver) {
 			// 試行回数
-			int trial_num = 10;
+			int trial_num = 1;
 			// 経路長の合計、経路長の2乗の合計
 			double length_sum = 0;
 			double length_sum2 = 0;
@@ -96,6 +96,41 @@ namespace TSPSolver {
 			Console.WriteLine("time   : " + time_ave + "[" + time_sd + "]");
 		}
 
+		/// <summary>
+		/// 逆近傍リストを作成する
+		/// </summary>
+		public static void RunInvNeighbor(string instanceName) {
+			TSPInstance instance = new TSPInstance(@"data/" + instanceName + ".tsp");
+
+			// 近傍リスト初期化
+			NeighborList neighborList = new NeighborList();
+			neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
+
+			// 試行回数
+			int trial_num = 10;
+			// 計算時間の2乗の合計
+			double time_sum = 0;
+			double time_sum2 = 0;
+
+			Stopwatch sw = new Stopwatch();
+			for (int i = 0; i < trial_num; i++) {
+				sw.Start();
+				// 逆近傍リストを作る
+				InverseNeighborList invNeighborList = new InverseNeighborList(neighborList);
+				sw.Stop();
+
+				// 計算時間の計上
+				time_sum += sw.ElapsedMilliseconds;
+				time_sum2 += (double)sw.ElapsedMilliseconds * sw.ElapsedMilliseconds;
+				sw.Reset();
+			}
+
+			double time_ave = (time_sum / trial_num);
+			double time_sd = Math.Sqrt(time_sum2 / (trial_num - 1.0) - (trial_num) / (trial_num - 1.0) * time_ave * time_ave);
+			Console.WriteLine("result : ave[sd]");
+			Console.WriteLine("time   : " + time_ave + "[" + time_sd + "]");
+		}
+
 		public static void Main(string[] args) {
 			foreach (string instanceName in INSTANCES) {
 				Console.WriteLine(instanceName);
@@ -107,13 +142,21 @@ namespace TSPSolver {
 				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
 				Benchmarker.Run(instance, new Neighbor2opt(neighborList));
 				*/
+				/*
+				NeighborList neighborList = new NeighborList();
+				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
+				Benchmarker.Run(instance, new NeighborDLB2opt(neighborList));
+				*/
+				/*
 				NeighborList neighborList = new NeighborList();
 				neighborList.ReadFrom(@"data/" + instanceName + ".neighbor");
 				InverseNeighborList invNeighborList = new InverseNeighborList(neighborList);
 				Benchmarker.Run(instance, new NeighborInvDLB2opt(neighborList, invNeighborList));
+				*/
 
 				// Benchmarker.RunNeighbor(instanceName);
+				Benchmarker.RunInvNeighbor(instanceName);
 			}
 		}
-	}
+	} 
 }
