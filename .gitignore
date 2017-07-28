@@ -263,4 +263,3 @@ __pycache__/
 # userdefine
 TSPSolver/data/*
 !/TSPSolver/data/.gitkeep
-!/TSPSolver/data/mk39393.tsp
