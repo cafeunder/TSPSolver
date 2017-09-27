@@ -1,5 +1,6 @@
 
 using System;
+using System.IO;
 
 namespace TSPSolver.structure {
 	/// <summary>
@@ -36,6 +37,20 @@ namespace TSPSolver.structure {
 				result += n + ",";
 			}
 			return result;
+		}
+
+		/// <summary>
+		/// ツアーファイルに出力する
+		/// </summary>
+		/// <param name="filename"></param>
+		public static void WriteTo(string filename, int[] tour) {
+			using (StreamWriter bw = new StreamWriter(File.OpenWrite(filename))) {
+				bw.WriteLine("TOUR_SECTION");
+				foreach (int n in tour) {
+					bw.WriteLine(n + 1);
+				}
+				bw.WriteLine(-1);
+			}
 		}
 	}
 }
